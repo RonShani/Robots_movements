@@ -38,7 +38,7 @@ Most importent - credits and appreciation - this code is using the wonderful wor
   
   https://github.com/GyverLibs/Tachometer Tachometer - Alex Gyver @AlexGyver 
   
-<b>Author Information</b>
+# <b>Author Information</b>
 
 Ron Shani @RonShani
 ronicube@gmail.com
