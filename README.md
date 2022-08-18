@@ -26,6 +26,9 @@ This robot interacts with ROS with the following nodes:
     /vel_mux : geometry feedback in real world (todo)
     
 Most importent - credits and appreciation - this code is using the wonderful work of:
-  ROS Serial Arduino library - Joshua Frank @frankjoshua77 https://github.com/frankjoshua/rosserial_arduino_lib
-  LinearRegression for arduino - Javier Alcubierre Villasol @cubiwan https://github.com/cubiwan/LinearRegressino
-  Tachometer - Alex Gyver @AlexGyver https://github.com/GyverLibs/Tachometer
+
+  https://github.com/frankjoshua/rosserial_arduino_lib ROS Serial Arduino library - Joshua Frank @frankjoshua77 
+  
+  https://github.com/cubiwan/LinearRegressino LinearRegression for arduino - Javier Alcubierre Villasol @cubiwan 
+  
+  https://github.com/GyverLibs/Tachometer Tachometer - Alex Gyver @AlexGyver 
