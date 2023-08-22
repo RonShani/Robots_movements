@@ -8,9 +8,10 @@
 
 #include "driving_constants.hpp"
 #include "helpers.hpp"
-#include "motors_drivers.hpp"
 
 #define VARIOUS_DRIVING_SPEEDS 14
+
+class MotorsDriver;
 
 class PWM_Calculation{
 public:
@@ -25,13 +26,14 @@ public:
     uint8_t mps_to_pwmRF(float mps);
     uint8_t mps_to_pwmLB(float mps);
     uint8_t mps_to_pwmRB(float mps);
-    void twistcb( const geometry_msgs::Twist& twstmsg, DrivingConstants &a_consts);
     void linearRegressionOfPWMS(LinearRegression &a_linearRegression, Helpers &a_helpers);
     void getMaxSpeed(LinearRegression &a_linearRegression, DrivingConstants &a_constants, MotorsDriver &a_driver, Helpers &a_helpers);
+    static void cntL();
+    static void cntR();
 
 public:
-    Tachometer tachoL;
-    Tachometer tachoR;
+    static Tachometer tachoL;
+    static Tachometer tachoR;
     const float L = 0.48; //distance between wheels
     const float R = 0.095; //wheel radius meters
     const float tiks_full_round = 1200.00; //this number is observatory

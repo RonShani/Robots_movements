@@ -7,23 +7,19 @@
 #include "helpers.hpp"
 #include "motors_drivers.hpp"
 
-PWM_Calculation::PWM_Calculation()
-: tachoL{}
-, tachoR{}
-{
-}
+Tachometer PWM_Calculation::tachoL{};
+Tachometer PWM_Calculation::tachoR{};
 
-float PWM_Calculation::getOmega(float _vl, float _vr)
-{
-    return 0.0f;
-}
+PWM_Calculation::PWM_Calculation(){}
 
 float PWM_Calculation::getOmega(float _vl, float _vr){
   return (((_vr-_vl)/L)*R);
 }
+
 float PWM_Calculation::getLinear(float _vl, float _vr){
   return (((_vr+_vl)/2)*R);
 }
+
 float PWM_Calculation::getVr(float Vx, float W){
   return (((2*Vx)+(W*L))/(2*R));
 }
@@ -51,26 +47,6 @@ uint8_t PWM_Calculation::mps_to_pwmLB(float mps){
 }
 uint8_t PWM_Calculation::mps_to_pwmRB(float mps){
   return(valuesRB[0]*mps+valuesRB[1]);
-}
-
-void PWM_Calculation::twistcb(const geometry_msgs::Twist &twstmsg, DrivingConstants &a_consts)
-{
-  if(twstmsg.linear.x>0.0){
-    if(twstmsg.linear.x>a_consts.maxLinearSpeedFWD){
-      Vl_goal=getVl(a_consts.maxLinearSpeedFWD,twstmsg.angular.z);
-      Vr_goal=getVr(a_consts.maxLinearSpeedFWD,twstmsg.angular.z);
-    }
-  }
-  else if(twstmsg.linear.x<0.0){
-    if(twstmsg.linear.x<a_consts.maxLinearSpeedBWD){
-      Vl_goal=getVl(a_consts.maxLinearSpeedBWD,twstmsg.angular.z);
-      Vr_goal=getVr(a_consts.maxLinearSpeedBWD,twstmsg.angular.z);
-    }
-  }
-  else{
-        Vl_goal=getVl(twstmsg.linear.x,twstmsg.angular.z);
-        Vr_goal=getVr(twstmsg.linear.x,twstmsg.angular.z);      
-    }
 }
 
 void PWM_Calculation::linearRegressionOfPWMS(LinearRegression &a_linearRegression, Helpers &a_helpers)
@@ -311,4 +287,11 @@ void PWM_Calculation::getMaxSpeed(LinearRegression &a_linearRegression,DrivingCo
    }
    
    linearRegressionOfPWMS(a_linearRegression, a_helpers);
+}
+
+IRAM_ATTR void PWM_Calculation::cntR(){
+    tachoR.tick();
+}
+IRAM_ATTR void PWM_Calculation::cntL() {
+    tachoL.tick();
 }

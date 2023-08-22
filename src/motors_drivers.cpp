@@ -56,3 +56,35 @@ WiresManager &MotorsDriver::right()
 {
     return m_right;
 }
+
+void MotorsDriver::motor_running(float a_velocity_left_goal, float a_velocity_right_goal, PWM_Calculation &a_pwm_calc)
+{
+  if((a_velocity_left_goal>0)&&(a_velocity_right_goal>0)){
+    rightBWD();
+    leftFWD();
+    analogWrite(m_right.speed(), a_pwm_calc.mps_to_pwmRB(a_velocity_right_goal));
+    analogWrite(m_left.speed(), a_pwm_calc.mps_to_pwmLF(a_velocity_left_goal));
+  }
+  else if((a_velocity_left_goal<0)&&(a_velocity_right_goal<0)){
+    rightFWD();
+    leftBWD();
+    analogWrite(m_right.speed(), a_pwm_calc.mps_to_pwmRF(a_velocity_right_goal));
+    analogWrite(m_left.speed(), a_pwm_calc.mps_to_pwmLB(a_velocity_left_goal));
+  }
+  else if((a_velocity_left_goal>0)&&(a_velocity_right_goal<0)){
+    rightFWD();
+    leftFWD();
+    analogWrite(m_right.speed(), a_pwm_calc.mps_to_pwmRF(a_velocity_right_goal));
+    analogWrite(m_left.speed(), a_pwm_calc.mps_to_pwmLF(a_velocity_left_goal));
+  }
+  else if((a_velocity_left_goal<0)&&(a_velocity_right_goal>0)){
+    rightBWD();
+    leftBWD();
+    analogWrite(m_right.speed(), a_pwm_calc.mps_to_pwmRB(a_velocity_right_goal));
+    analogWrite(m_left.speed(), a_pwm_calc.mps_to_pwmLB(a_velocity_left_goal));
+  }
+  else{
+    leftSTP();
+    rightSTP();
+  }
+}

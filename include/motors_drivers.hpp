@@ -5,12 +5,15 @@
 #include <Tachometer.h>
 #include "wires_manager.hpp"
 #include "driving_constants.hpp"
-#include "motors_pwm_calculations.hpp"
+
+class PWM_Calculation;
 
 class MotorsDriver{
+
 public:
-    MotorsDriver() = default;
     MotorsDriver(WiresManager &a_left, WiresManager &a_right);
+    ~MotorsDriver() = default;
+    
     void leftFWD();
     void leftBWD();
     void rightFWD();
@@ -19,7 +22,7 @@ public:
     void leftSTP();
     WiresManager &left();
     WiresManager &right();
-    
+    void motor_running(float a_velocity_left_goal, float a_velocity_right_goal, PWM_Calculation &a_pwm_calc);
 
 private:
     WiresManager &m_left;
